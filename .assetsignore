@@ -1,0 +1,10 @@
+.git
+.git/**
+.gitignore
+.wrangler
+.wrangler/**
+wrangler.jsonc
+node_modules
+node_modules/**
+*.docx
+README.md
