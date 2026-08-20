@@ -118,7 +118,7 @@ img { max-width: 100%; display: block; }
   margin: 0 auto;
 }
 .brand { display: flex; align-items: center; gap: 10px; }
-.brand img { height: 46px; width: auto; }
+.brand img { height: 62px; width: auto; }
 .brand__name { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; color: var(--ink); }
 .brand__tag { display: block; font-family: var(--sans); font-weight: 400; font-size: 0.68rem; color: var(--ink-soft); letter-spacing: 0.03em; }
 
