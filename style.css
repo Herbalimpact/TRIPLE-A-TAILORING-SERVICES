@@ -99,7 +99,7 @@ img { max-width: 100%; display: block; }
 .btn--sm { padding: 9px 18px; font-size: 0.88rem; }
 .btn-row { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
 
-/* ---------- Header ---------- */
+/* ---------- Header ---------- */ .brand-bar{text-align:center;padding:10px 20px 0;max-width:var(--maxw);margin:0 auto;} .brand-bar__text{display:block;font-family:var(--serif);font-weight:700;font-size:clamp(1.3rem,4vw,2.4rem);color:var(--ink);letter-spacing:0.02em;} .brand-bar__accent{color:var(--orange);} @media (max-width:600px){.brand-bar__text{font-size:1.3rem;}}
 .site-header {
   position: sticky;
   top: 0;
