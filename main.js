@@ -65,20 +65,51 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // Basic client-side form handling: no backend wired up yet, so show a friendly
-  // confirmation and prompt WhatsApp as the reliable fallback (forms are placeholders
-  // until a form backend / email address is connected).
+  // Contact/inquiry forms: submit to FormSubmit.co (free, no backend/server needed)
+  // and show the site's existing success message UI, or fall back to a WhatsApp
+  // prompt on error. Delivers to info@triple-a-tailoring-services.com.
   document.querySelectorAll('form[data-placeholder-form]').forEach(function (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var msg = form.getAttribute('data-success-message') || 'Thank you — this form is not yet connected to email. Please also reach us on WhatsApp so we see your request right away.';
       var note = form.querySelector('.form-submit-note');
-      if (note) {
-        note.textContent = msg;
-        note.style.display = 'block';
-      } else {
-        alert(msg);
-      }
+      var successMsg = form.getAttribute('data-success-message') || 'Asante kwa ujumbe wako!';
+      var errorMsg = 'Samahani, kuna hitilafu kutuma ujumbe. Tafadhali tujulishe kwa WhatsApp.';
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var formData = new FormData(form);
+      formData.append('_subject', 'Ujumbe Mpya kutoka Tovuti - TATS');
+      formData.append('_captcha', 'false');
+      formData.append('_template', 'table');
+      if (submitBtn) { submitBtn.disabled = true; }
+      fetch('https://formsubmit.co/ajax/info@triple-a-tailoring-services.com', {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: formData
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+          var ok = data && (data.success === 'true' || data.success === true);
+          var msg = ok ? successMsg : errorMsg;
+          if (note) {
+            note.textContent = msg;
+            note.style.display = 'block';
+            note.style.color = ok ? 'var(--green)' : '#b42318';
+          } else {
+            alert(msg);
+          }
+          if (ok) { form.reset(); }
+        })
+        .catch(function () {
+          if (note) {
+            note.textContent = errorMsg;
+            note.style.display = 'block';
+            note.style.color = '#b42318';
+          } else {
+            alert(errorMsg);
+          }
+        })
+        .finally(function () {
+          if (submitBtn) { submitBtn.disabled = false; }
+        });
     });
   });
 });
